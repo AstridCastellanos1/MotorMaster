@@ -4,10 +4,18 @@
 
 .header-container {
   width: 100vw;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 1000;
+}
+
+.header-contain {
+  width: 100vw;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  height: 10vh; /* 10% de la altura de la pantalla */
+  height: 10vh;
   padding: 0;
   margin: 0;
   box-sizing: border-box;
@@ -53,4 +61,44 @@
   color: white;
   font-size: 1.3rem;
   font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+}
+
+.bar-menu {
+  height: 2rem;
+  width: 100%;
+  background-color: gray;
+  display: flex;
+  align-items: center;
+  padding-left: 20px;
+  gap: 20px;
+}
+
+.bar-menu-item {
+  position: relative;
+  color: white; /* Color de los iconos */
+  text-decoration: none;
+  font-size: 1rem; /* Tamaño de los iconos */
+}
+
+.bar-menu-text {
+  position: absolute;
+  bottom: -35px;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: black;
+  color: white;
+  padding: 5px;
+  border-radius: 5px;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  white-space: nowrap;
+}
+
+.bar-menu-item:hover {
+  opacity: 1;
+  color: black;
+}
+
+.bar-menu-item:hover .bar-menu-text {
+  opacity: 1;
 }
