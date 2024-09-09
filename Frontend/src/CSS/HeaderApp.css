@@ -1,0 +1,56 @@
+* {
+  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+}
+
+.header-container {
+  width: 100vw;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 10vh; /* 10% de la altura de la pantalla */
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+  background-color: black;
+}
+
+.icon,
+.profile {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.icon {
+  width: 10%;
+  height: 100%; /* Asegúrate de que el contenedor icon tenga la misma altura que el header */
+}
+
+.header-img {
+  height: 80%; /* Limita la altura de la imagen a un porcentaje del contenedor */
+  width: auto; /* Ajusta el ancho automáticamente manteniendo la proporción */
+  max-height: 100%; /* Asegura que no crezca más allá del contenedor */
+  object-fit: contain; /* Mantiene la proporción de la imagen */
+  flex-shrink: 0; /* Evita que Flexbox intente redimensionar la imagen */
+}
+
+.profile {
+  width: 5%; /* Ajusta el ancho según sea necesario */
+}
+
+.profile-name {
+  width: 35px;
+  height: 35px;
+  border-radius: 50%;
+  background-color: #d9190b;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#user-p {
+  margin: 0;
+  color: white;
+  font-size: 1.3rem;
+  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+}
