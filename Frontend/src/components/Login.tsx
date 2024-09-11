@@ -1,15 +1,23 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import "../CSS/Login.css";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
-
-type Props = {};
+import { GlobalContext } from "./context/GlobalContext";
 
 function Login() {
   const [usuario, setUsuario] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
   const navigate = useNavigate();
+
+  const globalContext = useContext(GlobalContext);
+
+  if (!globalContext) {
+    return <div>Error: GlobalContext no está disponible.</div>;
+  }
+
+  const { setValor } = globalContext;
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -28,15 +36,16 @@ function Login() {
       if (response.ok) {
         const result = await response.json();
         if (result.success) {
-          navigate("/Login/Menu", { state: { usuario } });
+          setValor(usuario);
+          navigate("/Login/Menu");
         } else {
-          console.error("Error en el inicio de sesión:", result.message);
+          setErrorMessage("Usuario o contraseña incorrectos");
         }
       } else {
-        console.error("Error en la respuesta del servidor");
+        setErrorMessage("Error en la respuesta del servidor");
       }
     } catch (error) {
-      console.error("Error al enviar la solicitud:", error);
+      setErrorMessage("Error al enviar la solicitud");
     }
   };
 
@@ -85,6 +94,11 @@ function Login() {
                   {showPassword ? <FaEyeSlash /> : <FaEye />}
                 </div>
               </div>
+              {errorMessage && (
+                <div className="error-message">
+                  <label>{errorMessage}</label>
+                </div>
+              )}
               <button type="submit" className="login-button">
                 Ingresar
               </button>

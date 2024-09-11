@@ -1,71 +1,59 @@
-import React from "react";
-import { useLocation } from "react-router-dom";
 import HeaderApp from "./HeaderApp";
 import Cards from "./Card";
 import "../CSS/MenuAdministracion.css";
 
-const MenuAdministracion: React.FC = () => {
-  const location = useLocation();
-  const { usuario } = location.state || { usuario: "T" }; // Valor por defecto
-  const userInitial = usuario.charAt(0).toUpperCase();
-
+function MenuAdministracion() {
   return (
     <div className="menu-Admin-container">
-      <HeaderApp userInitial={userInitial} />
+      <HeaderApp />
       <div className="menu-Admin-content">
         <div className="grid-Admin-container">
           <div className="grid-Admin-item">
             <Cards
-              imageSrc="/Images/clientes.png"
+              imageSrc="/Images/clientes.jpg"
               title="Clientes"
               link="/informes"
-              userInitial={userInitial} // Pasamos la inicial al card
             />
           </div>
           <div className="grid-Admin-item">
             <Cards
-              imageSrc="/Images/Proveedores.png"
+              imageSrc="/Images/proveedores.jpg"
               title="Proveedores"
               link="/tops"
-              userInitial={userInitial} // Pasamos la inicial al card
             />
           </div>
           <div className="grid-Admin-item">
             <Cards
-              imageSrc="/Images/usuarios.png"
+              imageSrc="/Images/usuarios.jpg"
               title="Usuarios"
-              link="/ordenes"
-              userInitial={userInitial} // Pasamos la inicial al card
+              link="/Login/Menu/MenuAdministracion/Users"
             />
           </div>
           <div className="grid-Admin-item">
             <Cards
-              imageSrc="/Images/tickets.jpeg"
+              imageSrc="/Images/productos.jpg"
               title="Productos"
               link="/ordenes"
-              userInitial={userInitial} // Pasamos la inicial al card
             />
           </div>
           <div className="grid-Admin-item">
             <Cards
-              imageSrc="/Images/PanelAdministracion.jpg"
-              title="Marcas de Vehículos"
+              imageSrc="/Images/vehiculos.jpg"
+              title="Vehículos"
               link="/Login/Menu/MenuAdministracion"
-              userInitial={userInitial} // Pasamos la inicial al card
             />
           </div>
           <div className="grid-Admin-item">
             <Cards
-              imageSrc="/Images/tickets.jpeg"
-              title="Marcas de Productos"
+              imageSrc="/Images/servicios2.jpg"
+              title="Servicios"
               link="/ordenes"
-              userInitial={userInitial} // Pasamos la inicial al card
             />
           </div>
         </div>
       </div>
     </div>
   );
-};
+}
 
 export default MenuAdministracion;

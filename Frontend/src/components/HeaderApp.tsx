@@ -1,4 +1,5 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext } from "react";
+import { GlobalContext } from "./context/GlobalContext";
 import "../CSS/HeaderApp.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
@@ -7,24 +8,17 @@ import {
   faCog,
   faEnvelope,
 } from "@fortawesome/free-solid-svg-icons";
+import { Link } from "react-router-dom"; // Importa Link
 
-type HeaderAppProps = {
-  userInitial?: string;
-};
+const HeaderApp: React.FC = () => {
+  const globalContext = useContext(GlobalContext);
 
-function HeaderApp({ userInitial }: HeaderAppProps) {
-  const userLabel = document.getElementById("user-p")?.innerText;
-  const [initial, setInitial] = useState(userInitial || userLabel);
+  if (!globalContext) {
+    return <div>Error: Contexto no encontrado</div>;
+  }
 
-  useEffect(() => {
-    // Si no hay inicial recibida desde el login, intenta obtenerla del label
-    if (!userInitial) {
-      const userLabel = document.getElementById("user-p")?.innerText;
-      if (userLabel) {
-        setInitial(userLabel);
-      }
-    }
-  }, [userInitial]);
+  const { valor } = globalContext;
+  const primeraLetra = valor.charAt(0).toUpperCase();
 
   return (
     <div className="header-container">
@@ -38,30 +32,30 @@ function HeaderApp({ userInitial }: HeaderAppProps) {
         </div>
         <div className="profile" id="profile">
           <div className="profile-name">
-            <label id="user-p">{initial}</label>
+            <label id="user-p">{primeraLetra}</label>
           </div>
         </div>
       </div>
       <div className="bar-menu">
-        <a href="/Login/Menu" className="bar-menu-item">
+        <Link to="/Login/Menu" className="bar-menu-item">
           <FontAwesomeIcon icon={faHome} />
           <span className="bar-menu-text">Home</span>
-        </a>
-        <a href="/Login/Menu/MenuAdministracion" className="bar-menu-item">
+        </Link>
+        <Link to="/Login/Menu/MenuAdministracion" className="bar-menu-item">
           <FontAwesomeIcon icon={faCog} />
           <span className="bar-menu-text">Administración</span>
-        </a>
-        <a href="/profile" className="bar-menu-item">
+        </Link>
+        <Link to="/profile" className="bar-menu-item">
           <FontAwesomeIcon icon={faFileLines} />
           <span className="bar-menu-text">Informes</span>
-        </a>
-        <a href="/messages" className="bar-menu-item">
+        </Link>
+        <Link to="/messages" className="bar-menu-item">
           <FontAwesomeIcon icon={faEnvelope} />
           <span className="bar-menu-text">Mensajes</span>
-        </a>
+        </Link>
       </div>
     </div>
   );
-}
+};
 
 export default HeaderApp;

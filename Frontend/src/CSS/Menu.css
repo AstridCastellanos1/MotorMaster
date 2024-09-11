@@ -23,20 +23,20 @@ body {
 
 .grid-container {
   display: grid;
-  grid-template-columns: repeat(2, 1fr); /* Dos columnas */
-  grid-template-rows: repeat(2, 1fr); /* Dos filas */
-  gap: 3rem; /* Espacio entre los divs */
+  grid-template-columns: repeat(2, 1fr);
+  grid-template-rows: repeat(2, 1fr);
+  gap: 3rem;
 }
 
 .grid-item {
   width: 20vw;
   height: 30vh;
-  background-color: #f0f0f0; /* Color de fondo para visibilidad */
-  border-radius: 20px; /* Bordes redondeados */
+  background-color: #f0f0f0;
+  border-radius: 20px;
   display: flex;
   align-items: center;
   justify-content: center;
-  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1); /* Sombras suaves */
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
   text-align: center;
   font-size: 18px;
 }

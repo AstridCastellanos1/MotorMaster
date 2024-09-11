@@ -2,26 +2,19 @@ import React from "react";
 import { useNavigate } from "react-router-dom";
 import "../CSS/Card.css";
 
-type CardsProps = {
+type CardProps = {
   imageSrc: string;
   title: string;
   link: string;
-  userInitial: string; // Asegúrate de pasar la inicial aquí
 };
 
-const Cards: React.FC<CardsProps> = ({
-  imageSrc,
-  title,
-  link,
-  userInitial,
-}) => {
+const Card: React.FC<CardProps> = ({ imageSrc, title, link }) => {
   const navigate = useNavigate();
 
   const handleClick = () => {
     const userLabel = document.getElementById("user-p")?.innerText;
     console.log(userLabel);
-    console.log(userInitial);
-    navigate(link, { state: { usuario: userInitial || userLabel } });
+    navigate(link);
   };
 
   return (
@@ -32,4 +25,4 @@ const Cards: React.FC<CardsProps> = ({
   );
 };
 
-export default Cards;
+export default Card;
