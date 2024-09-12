@@ -5,6 +5,7 @@ import Login from "./components/Login";
 import Menu from "./components/Menu";
 import MenuAdministracion from "./components/MenuAdministracion";
 import Users from "./components/Users";
+import CatalogoClientes from "./components/CatalogoClientes";
 
 const App: React.FC = () => {
   return (
@@ -20,6 +21,10 @@ const App: React.FC = () => {
           <Route
             path="/Login/Menu/MenuAdministracion/Users"
             element={<Users />}
+          />
+          <Route
+            path="/Login/Menu/MenuAdministracion/CatalogoClientes"
+            element={<CatalogoClientes />}
           />
         </Routes>
       </Router>

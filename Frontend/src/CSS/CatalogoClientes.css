@@ -1,0 +1,97 @@
+* {
+  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+}
+
+html,
+body {
+  background-color: white;
+}
+
+.menu-container {
+  display: flex;
+  flex-direction: column;
+  min-height: 80vh;
+}
+.menu-Div {
+  margin-top: 9vh;
+  padding: 4vh;
+  background-color: white;
+  display: flex;
+  justify-content: center;
+}
+.menu-content {
+  margin-top: 0.01vh;
+  padding: 10vh;
+  background-color: white;
+  display: flex;
+  justify-content: center;
+}
+
+.grid-container {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr); /* Dos columnas */
+  grid-template-rows: repeat(2, 1fr); /* Dos filas */
+  gap: 3rem; /* Espacio entre los divs */
+}
+
+.grid-item {
+  width: 20vw;
+  height: 30vh;
+  background-color: #f0f0f0; /* Color de fondo para visibilidad */
+  border-radius: 20px; /* Bordes redondeados */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1); /* Sombras suaves */
+  text-align: center;
+  font-size: 18px;
+}
+
+.Tabla-cli {
+  width: 100%; /* Ocupa el ancho completo */
+  background-color: #c5bbbb; /* Color de fondo */
+  border-radius: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: 100%;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1); /* Sombras suaves */
+  padding: 20px;
+
+  margin: 10px 20px 30px 40px solid black;
+}
+.grid-items {
+  width: 22vw;
+  height: 10vh;
+  background-color: #ffffff; /* Color de fondo para visibilidad */
+  border-radius: 20px; /* Bordes redondeados */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1); /* Sombras suaves */
+  text-align: center;
+  font-size: 18px;
+}
+h3 {
+  font-size: 18px;
+  color: #ff5733; /* Cambia el color del texto a un tono naranja */
+}
+h1 {
+  font-size: 18px;
+  color: #000000; /* Cambia el color del texto a un tono naranja */
+}
+.table {
+  width: 100%; /* Asegura que la tabla ocupe todo el ancho */
+  border-collapse: collapse;
+  color: #ff5733;
+}
+.th {
+  background-color: #080808; /* Fondo gris claro para el encabezado */
+  font-size: 16px; /* Tamaño de texto ajustado */
+  margin: 20px; /* Agrega margen alrededor del contenedor */
+  margin: 10px 20px 30px 40px solid black;
+}
+
+.tr:nth-child(even) {
+  background-color: #0f0f0f; /* Color alternado para las filas */
+  margin: 10px 20px 30px 40px solid black;
+}

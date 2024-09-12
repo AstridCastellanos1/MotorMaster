@@ -12,7 +12,7 @@ function MenuAdministracion() {
             <Cards
               imageSrc="/Images/clientes.jpg"
               title="Clientes"
-              link="/informes"
+              link="/Login/Menu/MenuAdministracion/CatalogoClientes"
             />
           </div>
           <div className="grid-Admin-item">
