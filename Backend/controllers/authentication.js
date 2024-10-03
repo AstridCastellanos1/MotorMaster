@@ -1,11 +1,12 @@
-const User = require("../models/dbUser");
+// authentication.js
+const { findUserAndLog } = require("../models/dbUser");
 
 exports.login = async (req, res) => {
   const { usuario, password } = req.body;
 
   try {
-    // Buscar el usuario en la base de datos
-    const user = await User.findOne({ usu_usuario: usuario });
+    // Método para encontrar al usuario
+    const user = await findUserAndLog(usuario);
 
     // Verificar si el usuario existe
     if (!user) {
@@ -20,8 +21,12 @@ exports.login = async (req, res) => {
     }
 
     // Autenticación exitosa
-    console.log("Autenticación exitosa");
-    res.json({ success: true, usuario });
+    console.log("Autenticación exitosa ;)");
+    res.json({
+      success: true,
+      usuario,
+      imagen: user.usu_imagen 
+    });
   } catch (error) {
     console.error("Error en el proceso de autenticación:", error);
     res.json({

@@ -17,7 +17,7 @@ function Login() {
     return <div>Error: GlobalContext no está disponible.</div>;
   }
 
-  const { setValor } = globalContext;
+  const { setValor, setImagen } = globalContext;
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -37,6 +37,8 @@ function Login() {
         const result = await response.json();
         if (result.success) {
           setValor(usuario);
+          console.log("Imagen recibida:", result.imagen);
+          setImagen(result.imagen); // Guarda la imagen en el contexto
           navigate("/Login/Menu");
         } else {
           setErrorMessage("Usuario o contraseña incorrectos");
@@ -99,7 +101,7 @@ function Login() {
                   <label>{errorMessage}</label>
                 </div>
               )}
-              <button type="submit" className="login-button">
+              <button type="submit" className="login-button login-input">
                 Ingresar
               </button>
             </form>

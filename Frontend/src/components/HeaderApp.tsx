@@ -17,23 +17,29 @@ const HeaderApp: React.FC = () => {
     return <div>Error: Contexto no encontrado</div>;
   }
 
-  const { valor } = globalContext;
-  const primeraLetra = valor.charAt(0).toUpperCase();
+  const { valor, imagen } = globalContext;
 
   return (
     <div className="header-container">
       <div className="header-contain">
-        <div className="icon" id="icon">
+        <div className="navbar-brand d-flex align-items-center">
           <img
             src="/public/Images/LogoMotorMaster.png"
             alt="header-icon"
             className="header-img"
+            id="icon"
           />
+          <p className="name mb-0 ms-2">MotorMaster</p>
         </div>
-        <div className="profile" id="profile">
-          <div className="profile-name">
-            <label id="user-p">{primeraLetra}</label>
-          </div>
+
+        <div className="d-flex" id="img-container">
+          {/* Mostrar la imagen obtenida desde el contexto */}
+          <img
+              className="rounded-circle"
+              id="img-profile"
+              src={imagen ? `data:image/png;base64,${imagen}` : "/default-profile.png"}
+              alt="Profile Image"
+          />
         </div>
       </div>
       <div className="bar-menu">

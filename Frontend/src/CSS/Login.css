@@ -83,6 +83,7 @@ body {
 
 .login-input {
   width: 80%;
+  height: 2rem;
   padding: 10px;
   border-radius: 10px;
   color: white;
@@ -119,14 +120,18 @@ body {
 
 .login-button {
   width: 50%;
-  padding: 12px;
-  margin-top: 15px;
   background-color: #e34d42;
   border: none;
   border-radius: 10px;
   color: white;
   cursor: pointer;
+  display: flex; /* Utiliza flexbox */
+  align-items: center; /* Centra verticalmente */
+  justify-content: center; /* Centra horizontalmente */
+  padding: 10px; /* Agrega padding para más espacio */
+  text-align: center; /* Asegúrate de que el texto esté centrado */
 }
+
 
 .login-button:hover {
   background-color: #2a3b35;

@@ -6,12 +6,13 @@ import Menu from "./components/Menu";
 import MenuAdministracion from "./components/MenuAdministracion";
 import Users from "./components/Users";
 import CatalogoClientes from "./components/CatalogoClientes";
+import WorkOrder from "./components/WorkOrder";
 
 const App: React.FC = () => {
   return (
     <GlobalProvider>
       <Router>
-        <Routes>
+        <Routes> 
           <Route path="/Login" element={<Login />} />
           <Route path="/Login/Menu" element={<Menu />} />
           <Route
@@ -26,6 +27,7 @@ const App: React.FC = () => {
             path="/Login/Menu/MenuAdministracion/CatalogoClientes"
             element={<CatalogoClientes />}
           />
+          <Route path="/Login/Menu/WorkOrder" element={<WorkOrder />} />
         </Routes>
       </Router>
     </GlobalProvider>
