@@ -1,0 +1,94 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+  }
+
+.main-workOrder {
+    width: 100%;
+}
+
+#main-information {
+    display: flex;
+    flex-direction: column; 
+    align-items: center; 
+    justify-content: center; 
+    height: 100%; 
+    margin-top: 10px;
+  }
+
+.main-information-item {
+    width: 80%;
+    margin-left: 10px;
+    background-color: #e3f2fd;/*#e8e5df */
+    border-radius: 8px;
+    margin-top: 15px;
+}
+
+#order-buttons {
+    min-height: 30px;
+    height: auto;
+    display: flex;
+    justify-content: center; 
+    align-items: center;
+    margin-left: 0;
+}
+  
+  .order-buttons-item {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: black;
+    text-decoration: none;
+    font-size: 0.8rem;
+  }
+  
+  .order-menu-text {
+    padding-left: 5px;
+  }
+  
+  .order-menu-item:hover {
+    opacity: 1;
+    color: gray;
+  }
+  
+  .order-menu-item:hover .bar-menu-text {
+    opacity: 1;
+  }
+
+#order-creator {
+    height: 180px;
+}
+
+#order-cost {
+    height: 220px;
+}
+
+.creation-details-p, .cost-details-p {
+    margin-bottom: 0;
+    margin-top: 10px;
+    margin-left: 30px;
+    color: gray;
+    font-size: 13px;
+    font-weight: 500;
+}
+
+.creation-details-hr, .cost-details-hr {
+    margin-top: 5px;
+    margin-bottom: 15px;
+    height: 3px;
+    border: none;
+    background-color: gray;
+    opacity: 1;
+}
+
+.main-information-item:hover .creation-details-hr {
+    background-color: #e34d42;
+}
+
+.information-p {
+    margin-top: 0;
+    font-weight: 700;
+}
+

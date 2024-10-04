@@ -6,7 +6,7 @@ import {
   faFileLines,
   faHome,
   faCog,
-  faEnvelope,
+  faQuestionCircle,
 } from "@fortawesome/free-solid-svg-icons";
 import { Link } from "react-router-dom"; // Importa Link
 
@@ -55,9 +55,9 @@ const HeaderApp: React.FC = () => {
           <FontAwesomeIcon icon={faFileLines} />
           <span className="bar-menu-text">Informes</span>
         </Link>
-        <Link to="/messages" className="bar-menu-item">
-          <FontAwesomeIcon icon={faEnvelope} />
-          <span className="bar-menu-text">Mensajes</span>
+        <Link to="/faq" className="bar-menu-item">
+          <FontAwesomeIcon icon={faQuestionCircle} />
+          <span className="bar-menu-text">Preguntas Frecuentes</span>
         </Link>
       </div>
     </div>

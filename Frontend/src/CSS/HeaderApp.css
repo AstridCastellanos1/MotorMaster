@@ -24,7 +24,7 @@ html, body {
 .bar-menu {
   height: 2rem;
   width: 100%;
-  background-color: gray;
+  background-color: #e3f2fd;
   display: flex;
   align-items: center;
   padding-left: 20px;
@@ -33,9 +33,9 @@ html, body {
 
 .bar-menu-item {
   position: relative;
-  color: white; /* Color de los iconos */
+  color: black; /* Color de los iconos */
   text-decoration: none;
-  font-size: 1rem; /* Tamaño de los iconos */
+  font-size: 0.8rem; /* Tamaño de los iconos */
 }
 
 .bar-menu-text {
@@ -55,7 +55,7 @@ html, body {
 
 .bar-menu-item:hover {
   opacity: 1;
-  color: black;
+  color: gray;
 }
 
 .bar-menu-item:hover .bar-menu-text {
@@ -69,6 +69,7 @@ html, body {
 
 #icon {
   height: 40px;
+  padding-left: 10px;
 }
 
 .name {
