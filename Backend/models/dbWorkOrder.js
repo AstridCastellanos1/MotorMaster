@@ -6,7 +6,9 @@ const workOrderSchema = new mongoose.Schema(
     otr_presupuesto: { type: Number, required: true },
     otr_costo_actual: { type: Number, required: true },
     otr_fecha_creacion: { type: Date, required: true },
-    usu_creador: { type: mongoose.Schema.Types.ObjectId, ref: "User" }
+    usu_creador: { type: mongoose.Schema.Types.ObjectId, ref: "Usuario" },
+    otr_descripcion: { type: String, required: true },
+    otr_solucion: { type: String } 
   },
   { collection: "trf_orden_trabajo" }
 );

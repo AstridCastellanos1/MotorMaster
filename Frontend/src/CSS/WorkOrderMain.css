@@ -1,0 +1,109 @@
+.basic-div {
+  height: 35vh;
+  background-color: rgb(230, 241, 214);
+  display: flex;
+  width: 100%;
+  margin-top: 10px;
+  border-bottom-left-radius: 8px;
+  border-bottom-right-radius: 8px;
+}
+
+.costumer-information {
+  width: 50%;
+  margin: 10px 0;
+  padding: 0;
+  border: none;
+}
+
+.main-details-p {
+  margin-bottom: 0;
+  margin-left: 12px;
+  margin-top: 10px;
+  color: gray;
+  font-size: 12px;
+}
+
+.basic-details-p {
+  font-size: 16px;
+  font-weight: 500;
+  margin-bottom: 10px;
+}
+
+.status-select label {
+  margin-right: 10px;
+}
+  
+.status-select select {
+  padding: 5px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+  
+.input-with-icons {
+  position: relative;
+  display: flex;
+  width: 80%;
+}
+  
+.status-select {
+  flex: 1;
+  margin-left: 10px;
+  height: auto; 
+  padding: 3px 10px; 
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 13px;
+  margin-top: 0;
+  margin-bottom: 0;
+  font-weight: 500;
+}
+
+.status-select:focus {
+  outline: none;            
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+  border: none;
+}
+  
+.input-field {
+  flex: 1;
+  margin-left: 10px;
+  height: 25px;
+  padding: 10px 30px 10px 10px; 
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 13px;
+  font-weight: 500;
+}
+
+.input-field:focus {
+  outline: none;            
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+  border: none;
+}
+  
+.icon-container {
+  position: absolute;
+  right: 12px;
+  top: 50%;
+  transform: translateY(-50%); 
+  display: flex;
+}
+  
+.icon {
+  margin-left: 5px; 
+  cursor: pointer; 
+  height: 0.8rem;
+}
+  
+.input-service {
+    height: 25px;
+    width: 165px;
+}
+
+.vehicle-information {
+  width: 50%;
+  margin: 10px 0;
+  padding: 0;
+  border: none;
+  border-left: 3px solid gray;
+}

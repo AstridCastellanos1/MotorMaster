@@ -29,7 +29,7 @@ function Menu() {
             <Cards
               imageSrc="/Images/Servicios.jpg"
               title="Ordenes de Trabajo"
-              link="/Login/Menu/WorkOrder"
+              link="/Login/Menu/MenuAdministracion"
             />
           </div>
         </div>

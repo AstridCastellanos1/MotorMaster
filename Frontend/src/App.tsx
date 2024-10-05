@@ -27,7 +27,7 @@ const App: React.FC = () => {
             path="/Login/Menu/MenuAdministracion/CatalogoClientes"
             element={<CatalogoClientes />}
           />
-          <Route path="/Login/Menu/WorkOrder" element={<WorkOrder />} />
+          <Route path="/Login/Menu/MenuAdministracion/WorkOrder/:caseCode" element={<WorkOrder />} />
         </Routes>
       </Router>
     </GlobalProvider>

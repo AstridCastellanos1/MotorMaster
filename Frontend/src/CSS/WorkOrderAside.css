@@ -1,22 +1,17 @@
 * {
     margin: 0;
     padding: 0;
-    box-sizing: border-box;
     font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
-  }
-
-.main-workOrder {
-    width: 100%;
 }
 
 #main-information {
-    display: flex;
-    flex-direction: column; 
-    align-items: center; 
-    justify-content: center; 
-    height: 100%; 
-    margin-top: 10px;
-  }
+  display: flex;
+  flex-direction: column; 
+  align-items: center; 
+  justify-content: center; 
+  height: 100%; 
+  margin-top: 10px;
+}
 
 .main-information-item {
     width: 80%;

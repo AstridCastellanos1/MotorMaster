@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import "../CSS/WorkOrderAside.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
@@ -6,9 +6,8 @@ import {
   faEnvelope, 
   faSignOutAlt, 
 } from "@fortawesome/free-solid-svg-icons";
-import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
-// Definir la interfaz de las props
 interface WorkOrderAsideProps {
   creatorName: string;
   creationDate: string;
@@ -17,22 +16,42 @@ interface WorkOrderAsideProps {
 }
 
 const WorkOrderAside: React.FC<WorkOrderAsideProps> = ({ creatorName, creationDate, expectedCost, currentCost }) => {
+  const navigate = useNavigate();
+  const [unsavedChanges, setUnsavedChanges] = useState(true); // Simula si hay cambios no guardados
+
+  // Función que maneja el clic en el botón de salir
+  const handleExitClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
+    e.preventDefault(); // Evita la acción por defecto del enlace
+
+    if (unsavedChanges) {
+      // Muestra el mensaje de confirmación si hay cambios no guardados
+      const confirmExit = window.confirm("Tienes cambios sin guardar. ¿Estás seguro de que quieres salir?");
+      if (confirmExit) {
+        // Redirige a la ruta si el usuario confirma
+        navigate("/Login/Menu/MenuAdministracion");
+      }
+    } else {
+      // Redirige directamente si no hay cambios sin guardar
+      navigate("/Login/Menu/MenuAdministracion");
+    }
+  };
+
   return (
     <div className='main-workOrder'>
       <div className='' id='main-information'>
         <div className='row main-information-item' id='order-buttons'>
-          <Link to="/Login/Menu/MenuAdministracion" className="order-buttons-item col-lg-4 col-md-4 col-sm-12">
+          <a href="#save" className="order-buttons-item col-lg-4 col-md-4 col-sm-12">
             <FontAwesomeIcon icon={faSave} />
             <span className="order-menu-text">Guardar</span>
-          </Link>
-          <Link to="/profile" className="order-buttons-item col-lg-4 col-md-4 col-sm-12">
+          </a>
+          <a href="mailto:astridcorado88@gmail.com?subject=Asunto del correo&body=Cuerpo del correo" className="order-buttons-item col-lg-4 col-md-4 col-sm-12">
             <FontAwesomeIcon icon={faEnvelope} />
             <span className="order-menu-text">Enviar Correo</span>
-          </Link>
-          <Link to="/messages" className="order-buttons-item col-lg-4 col-md-4 col-sm-12">
+          </a>
+          <a href="#exit" onClick={handleExitClick} className="order-buttons-item col-lg-4 col-md-4 col-sm-12">
             <FontAwesomeIcon icon={faSignOutAlt} />
             <span className="order-menu-text">Salir</span>
-          </Link>
+          </a>
         </div>
 
         {/* Información del creador */}
@@ -57,6 +76,6 @@ const WorkOrderAside: React.FC<WorkOrderAsideProps> = ({ creatorName, creationDa
       </div>
     </div>
   );
-}
+};
 
 export default WorkOrderAside;

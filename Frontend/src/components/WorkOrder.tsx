@@ -1,33 +1,49 @@
 import React, { useEffect, useState } from 'react';
+import { useParams } from 'react-router-dom'; // Importa el hook useParams
 import "../CSS/WorkOrder.css";
 import HeaderApp from "./HeaderApp";
 import WorkOrderAside from "./WorkOrderAside";
+import WorkOrderBottom from "./WorkOrderBottom";
+import WorkOrderMain from "./WorkOrderMain";
 
 const WorkOrder = () => {
+  const { caseCode } = useParams<{ caseCode: string }>(); // Extrae el código de la URL
   const [orderData, setOrderData] = useState({
     creatorName: '',
     creationDate: '',
     expectedCost: 0,
-    currentCost: 0
+    currentCost: 0,
+    description: '',
+    solution: '',
+    status: '',
+    clientName: '',
+    service: '',
+    plate: '',
+    brand: ''
   });
 
   useEffect(() => {
-    // Función para obtener los detalles de la orden de trabajo
     const fetchWorkOrderDetails = async () => {
       try {
-        const response = await fetch("http://localhost:3000/api/workOrder/1101");
+        // Usa el caseCode extraído de la URL para hacer la petición
+        const response = await fetch(`http://localhost:3000/api/workOrder/${caseCode}`);
         const result = await response.json();
 
-        // Verifica que 'result.data' contenga los datos que necesitas
         if (result.success) {
-          // Aquí puedes asegurarte de que la estructura coincide con lo que esperas
-          const { creatorName, creationDate, expectedCost, currentCost } = result.data;
+          const { creatorName, creationDate, expectedCost, currentCost, description, solution, status, clientName, service, plate, brand } = result.data;
 
           setOrderData({
             creatorName: creatorName || 'Desconocido',
             creationDate: creationDate || 'Desconocida',
             expectedCost: expectedCost || 0,
-            currentCost: currentCost || 0
+            currentCost: currentCost || 0,
+            description: description || '',
+            solution: solution || '',
+            status: status || '',
+            clientName: clientName || '',
+            service: service || '',
+            plate: plate || '',
+            brand: brand || ''
           });
         } else {
           console.error("Error al obtener la orden de trabajo:", result.message);
@@ -38,14 +54,24 @@ const WorkOrder = () => {
     };
 
     fetchWorkOrderDetails();
-  }, []);
+  }, [caseCode]);
 
   return (
     <div>
       <HeaderApp />
-      <div className='main-workOrder row'>
-        <div className='col-lg-8' id='workOrder-information'>
-          {/* Información adicional de la orden */}
+      <div className='workOrder-information row'>
+        <div className='col-lg-8' id='main-workOrder'>
+          <div className='information-div nav-div'>
+            <p className='nav-information'>Caso No. {caseCode}</p>
+          </div>
+          <WorkOrderMain
+            status={orderData.status}
+            clientName={orderData.clientName}
+            service={orderData.service}
+            plate={orderData.plate}
+            brand={orderData.brand}
+          />
+          <WorkOrderBottom description={orderData.description} solution={orderData.solution} />
         </div>
         <div className='col-lg-4' id='aside-information'>
           <WorkOrderAside
@@ -58,6 +84,6 @@ const WorkOrder = () => {
       </div>
     </div>
   );
-}
+};
 
 export default WorkOrder;

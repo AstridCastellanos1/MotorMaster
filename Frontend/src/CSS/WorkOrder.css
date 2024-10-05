@@ -1,9 +1,42 @@
 * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
-  }
+  margin: 0;
+  padding: 0;
+  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+}
+
+.workOrder-information {
+  width: 100%;
+}
+
+#main-workOrder {
+  display: flex;
+  flex-direction: column; 
+  align-items: center; 
+  padding-left: 4.2vw;
+  padding-right: 0;
+  margin: 0;
+
+}
+
+.nav-div {
+  min-height: 30px;
+  height: auto;
+  margin-top: 10px;
+  border-bottom: 2px solid gray;
+  display: flex;
+  align-items: flex-end;
+  position: relative;
+}
+
+.nav-information {
+  margin-bottom: 0;
+  margin-left: 10px;
+  color: gray;
+  font-size: 16px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: border 0.3s ease, color 0.3s ease;
+}
 
 #aside-information {
     padding: 0;

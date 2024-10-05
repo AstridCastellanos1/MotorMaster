@@ -1,0 +1,47 @@
+.solution-div {
+    height: 35vh;
+ }
+  
+  .solution-p {
+    margin-left: 7vh;
+  }
+  
+  .p-information {
+    position: relative;
+    bottom: -2px; 
+    border-bottom: 2px solid gray;
+  }
+
+  .nav-information.active {
+    color: #e34d42; /* Cambia el color del texto a rojo #e34d42*/
+    border-bottom: 2px solid #e34d42; 
+    font-weight: 700;
+  }
+  
+  .information-div {
+    width: 100%;
+  }
+  
+  .description-solution {
+    flex: 1; 
+    display: flex;
+    flex-direction: column; 
+    height: 100%; 
+    width: 100%;
+}
+
+.description-solution-textarea {
+    flex: 1;
+    width: 100%;
+    resize: none; 
+    border-bottom-right-radius: 8px;
+    border-bottom-left-radius: 8px;
+    box-sizing: border-box; 
+    padding: 10px; 
+  }
+  
+  .description-solution-textarea:focus {
+    outline: none;            
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+    border: none;
+  }
