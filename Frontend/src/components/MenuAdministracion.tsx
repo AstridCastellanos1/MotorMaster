@@ -28,13 +28,13 @@ function MenuAdministracion() {
               <input
                 className="form-control me-2 input-administration"
                 type="search"
-                placeholder="Search"
+                placeholder="Ingrese el No. de orden"
                 aria-label="Search"
                 value={caseCode} // Asocia el input al estado
                 onChange={(e) => setCaseCode(e.target.value)} // Actualiza el estado con el valor del input
               />
               <button className="btn btn-outline-success" type="submit">
-                Search
+                Buscar
               </button>
             </form>
           </div>

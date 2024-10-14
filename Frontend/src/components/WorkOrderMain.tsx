@@ -1,19 +1,33 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import "../CSS/WorkOrderMain.css";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faSearch, faEye } from '@fortawesome/free-solid-svg-icons';
+import { faSearch, faTimes } from '@fortawesome/free-solid-svg-icons';
 
 interface WorkOrderMainProps {
   status: string;
   clientName: string;
+  clientCode: string;
+  responsibleName: string;
+  responsibleCode: string;
   service: string;
   plate: string;
   brand: string;
 }
 
-const WorkOrderMain: React.FC<WorkOrderMainProps> = ({ status, clientName, service, plate, brand }) => {
+const WorkOrderMain: React.FC<WorkOrderMainProps> = ({ status, clientName, clientCode, responsibleName, responsibleCode, service, plate, brand }) => {
+  const [selectedStatus, setSelectedStatus] = useState('');
 
-  const [selectedStatus, setSelectedStatus] = useState(status);
+  // Validación del estado recibido y asignación inicial
+  useEffect(() => {
+    const validStatuses = ['Registrado', 'Proceso', 'Cerrado'];
+    
+    // Si el status recibido es válido, se asigna como valor inicial al select
+    if (validStatuses.includes(status)) {
+      setSelectedStatus(status);
+    } else {
+      setSelectedStatus(''); // Deja la opción por defecto si no es válido
+    }
+  }, [status]);
 
   const handleStatusChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
     setSelectedStatus(event.target.value);
@@ -28,19 +42,23 @@ const WorkOrderMain: React.FC<WorkOrderMainProps> = ({ status, clientName, servi
         <p className='main-details-p'>Estado</p>
         <select id="status" className='status-select' value={selectedStatus} onChange={handleStatusChange}>
           <option value="">Seleccione un estado</option>
-          <option value="registrado">Registrado</option>
-          <option value="en_proceso">En Proceso</option>
-          <option value="cerrado">Cerrado</option>
+          <option value="Registrado">Registrado</option>
+          <option value="Proceso">En Proceso</option>
+          <option value="Cerrado">Cerrado</option>
         </select>
 
         <p className='main-details-p'>Cliente</p>
         <div className="input-with-icons">
-          <input type="text" value={clientName} placeholder="Ingrese el nombre del cliente" className="input-field" readOnly />
+          <input type="text" value={clientName} placeholder="Ingrese el nombre del cliente" className="input-field input-fild-custom" readOnly />
+        </div>
+        <p className='main-details-p'>Responsable</p>
+        <div className="input-with-icons">
+          <input type="text" value={responsibleName} placeholder="Ingrese el nombre del responsable" className="input-field input-fild-responsible" />
           <div className="icon-container">
-            <FontAwesomeIcon icon={faEye} className="icon" />
+            <FontAwesomeIcon icon={faSearch} className="icon icon-buscar" />
+            <FontAwesomeIcon icon={faTimes} className="icon icon-buscar" />
           </div>
         </div>
-
         <p className='main-details-p'>Servicio</p>
         <input type="text" value={service} placeholder="Ingrese el servicio" className="status-select input-service" readOnly />
       </div>

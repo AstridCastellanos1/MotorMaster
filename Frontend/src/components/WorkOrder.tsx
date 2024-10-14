@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom'; // Importa el hook useParams
+import { useParams } from 'react-router-dom';
 import "../CSS/WorkOrder.css";
 import HeaderApp from "./HeaderApp";
 import WorkOrderAside from "./WorkOrderAside";
@@ -7,7 +7,7 @@ import WorkOrderBottom from "./WorkOrderBottom";
 import WorkOrderMain from "./WorkOrderMain";
 
 const WorkOrder = () => {
-  const { caseCode } = useParams<{ caseCode: string }>(); // Extrae el código de la URL
+  const { caseCode } = useParams<{ caseCode: string }>();
   const [orderData, setOrderData] = useState({
     creatorName: '',
     creationDate: '',
@@ -17,20 +17,39 @@ const WorkOrder = () => {
     solution: '',
     status: '',
     clientName: '',
+    clientCode: '',
+    clientEmail: '',
     service: '',
     plate: '',
-    brand: ''
+    brand: '',
+    responsibleName: '',
+    responsibleCode: ''
   });
 
   useEffect(() => {
     const fetchWorkOrderDetails = async () => {
       try {
-        // Usa el caseCode extraído de la URL para hacer la petición
         const response = await fetch(`http://localhost:3000/api/workOrder/${caseCode}`);
         const result = await response.json();
 
         if (result.success) {
-          const { creatorName, creationDate, expectedCost, currentCost, description, solution, status, clientName, service, plate, brand } = result.data;
+          const { 
+            creatorName, 
+            creationDate, 
+            expectedCost, 
+            currentCost, 
+            description, 
+            solution, 
+            status, 
+            clientName, 
+            clientEmail, 
+            service, 
+            plate, 
+            brand, 
+            responsibleName, 
+            clientCode, 
+            responsibleCode 
+          } = result.data;
 
           setOrderData({
             creatorName: creatorName || 'Desconocido',
@@ -41,9 +60,13 @@ const WorkOrder = () => {
             solution: solution || '',
             status: status || '',
             clientName: clientName || '',
+            clientCode: clientCode || '',
+            clientEmail: clientEmail || '',
             service: service || '',
             plate: plate || '',
-            brand: brand || ''
+            brand: brand || '',
+            responsibleName: responsibleName || '',
+            responsibleCode: responsibleCode || ''
           });
         } else {
           console.error("Error al obtener la orden de trabajo:", result.message);
@@ -62,15 +85,19 @@ const WorkOrder = () => {
       <div className='workOrder-information row'>
         <div className='col-lg-8' id='main-workOrder'>
           <div className='information-div nav-div'>
-            <p className='nav-information'>Caso No. {caseCode}</p>
+            <p className='nav-information'>Orden No. {caseCode}</p>
           </div>
           <WorkOrderMain
             status={orderData.status}
             clientName={orderData.clientName}
+            clientCode={orderData.clientCode} 
+            responsibleName={orderData.responsibleName}
+            responsibleCode={orderData.responsibleCode}
             service={orderData.service}
             plate={orderData.plate}
             brand={orderData.brand}
           />
+
           <WorkOrderBottom description={orderData.description} solution={orderData.solution} />
         </div>
         <div className='col-lg-4' id='aside-information'>
@@ -79,6 +106,13 @@ const WorkOrder = () => {
             creationDate={orderData.creationDate}
             expectedCost={orderData.expectedCost}
             currentCost={orderData.currentCost}
+            clientEmail={orderData.clientEmail}
+            caseCode={caseCode} 
+            solution={orderData.solution} // Añadido
+            description={orderData.description} // Añadido
+            status={orderData.status} // Añadido
+            clientName={orderData.clientName} // Añadido
+            responsibleName={orderData.responsibleName} // Añadido
           />
         </div>
       </div>

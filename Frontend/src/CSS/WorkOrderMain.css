@@ -107,3 +107,8 @@
   border: none;
   border-left: 3px solid gray;
 }
+
+.icon-buscar.disabled {
+  pointer-events: none; /* No permite clics en el ícono */
+  opacity: 0.5;         /* Hacer que se vea deshabilitado */
+}
