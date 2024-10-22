@@ -81,6 +81,10 @@
   border: none;
 }
   
+#input-fild-costum {
+  width: auto;
+}
+
 .icon-container {
   position: absolute;
   right: 12px;

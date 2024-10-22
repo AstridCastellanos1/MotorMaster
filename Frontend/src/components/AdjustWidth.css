@@ -1,0 +1,21 @@
+.auto-resize-input-wrapper {
+  display: inline-block;
+  position: relative;
+}
+
+.hidden-span {
+  visibility: hidden;
+  position: absolute;
+  white-space: pre;
+  font-family: inherit;
+  font-size: inherit;
+  padding: 0;
+  margin: 0;
+}
+
+.input-adjust-text {
+  font-family: inherit;
+  font-size: inherit;
+  border: 1px solid #ccc;
+  padding: 4px;
+}

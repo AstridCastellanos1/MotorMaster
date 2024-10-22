@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import "../CSS/WorkOrderMain.css";
+import './AdjustWidth.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faSearch, faTimes } from '@fortawesome/free-solid-svg-icons';
+import { faSearch, faEye } from '@fortawesome/free-solid-svg-icons';
+import useAutoResizeInput from './useAutoResizeInput'; // Importa el hook personalizado
 
 interface WorkOrderMainProps {
   status: string;
@@ -14,18 +16,25 @@ interface WorkOrderMainProps {
   brand: string;
 }
 
-const WorkOrderMain: React.FC<WorkOrderMainProps> = ({ status, clientName, clientCode, responsibleName, responsibleCode, service, plate, brand }) => {
+const WorkOrderMain: React.FC<WorkOrderMainProps> = ({
+  status,
+  clientName,
+  clientCode,
+  responsibleName,
+  responsibleCode,
+  service,
+  plate,
+  brand
+}) => {
   const [selectedStatus, setSelectedStatus] = useState('');
 
-  // Validación del estado recibido y asignación inicial
   useEffect(() => {
     const validStatuses = ['Registrado', 'Proceso', 'Cerrado'];
     
-    // Si el status recibido es válido, se asigna como valor inicial al select
     if (validStatuses.includes(status)) {
       setSelectedStatus(status);
     } else {
-      setSelectedStatus(''); // Deja la opción por defecto si no es válido
+      setSelectedStatus(''); 
     }
   }, [status]);
 
@@ -49,29 +58,79 @@ const WorkOrderMain: React.FC<WorkOrderMainProps> = ({ status, clientName, clien
 
         <p className='main-details-p'>Cliente</p>
         <div className="input-with-icons">
-          <input type="text" value={clientName} placeholder="Ingrese el nombre del cliente" className="input-field input-fild-custom" readOnly />
-        </div>
-        <p className='main-details-p'>Responsable</p>
-        <div className="input-with-icons">
-          <input type="text" value={responsibleName} placeholder="Ingrese el nombre del responsable" className="input-field input-fild-responsible" />
+          <AutoResizeInput 
+            value={clientName} 
+            placeholder="Ingrese el nombre del cliente" 
+            className="input-field" 
+            readOnly 
+          />
           <div className="icon-container">
+            <FontAwesomeIcon icon={faEye} className="icon icon-buscar" />
             <FontAwesomeIcon icon={faSearch} className="icon icon-buscar" />
-            <FontAwesomeIcon icon={faTimes} className="icon icon-buscar" />
           </div>
         </div>
+
+        <p className='main-details-p'>Responsable</p>
+        <div className="input-with-icons">
+          <AutoResizeInput 
+            value={responsibleName} 
+            placeholder="Ingrese el nombre del responsable" 
+            className="input-field" 
+            readOnly 
+          />
+          <div className="icon-container">
+            <FontAwesomeIcon icon={faSearch} className="icon icon-buscar" />
+          </div>
+        </div>
+
         <p className='main-details-p'>Servicio</p>
-        <input type="text" value={service} placeholder="Ingrese el servicio" className="status-select input-service" readOnly />
+        <AutoResizeInput 
+          value={service} 
+          placeholder="Ingrese el servicio" 
+          className="status-select input-service" 
+          readOnly 
+        />
+
       </div>
 
       <div className='basic-information-div vehicle-information'>
         <p className='main-details-p basic-details-p'>Información del vehículo</p>
 
         <p className='main-details-p'>Placa</p>
-        <input type="text" value={plate} placeholder="Ingrese la placa" className="status-select input-service" readOnly />
+        <AutoResizeInput 
+          value={plate} 
+          placeholder="Ingrese la placa" 
+          className="status-select input-service" 
+          readOnly 
+        />
 
         <p className='main-details-p'>Marca</p>
-        <input type="text" value={brand} placeholder="Ingrese la marca" className="status-select input-service" readOnly />
+        <AutoResizeInput 
+          value={brand} 
+          placeholder="Ingrese la marca" 
+          className="status-select input-service" 
+          readOnly 
+        />
       </div>
+    </div>
+  );
+};
+
+// Componente AutoResizeInput para ajustar el tamaño del input
+const AutoResizeInput: React.FC<{ value: string; placeholder?: string; className?: string; readOnly?: boolean }> = ({ value, placeholder, className, readOnly }) => {
+  const { inputWidth, spanRef } = useAutoResizeInput(value);
+
+  return (
+    <div className="auto-resize-input-wrapper">
+      <span ref={spanRef} className="hidden-span">{value}</span>
+      <input
+        type="text"
+        value={value}
+        placeholder={placeholder}
+        style={{ width: `${inputWidth + 20}px` }}
+        className={className}
+        readOnly={readOnly}
+      />
     </div>
   );
 };
