@@ -7,7 +7,7 @@ import MenuAdministracion from "./components/MenuAdministracion";
 import Users from "./components/Users";
 import CatalogoClientes from "./components/CatalogoClientes";
 import WorkOrder from "./components/WorkOrder";
-import useAutoResizeInput from "./components/useAutoResizeInput";
+import useAutoResizeInput from "./components/UseAutoResizeInput";
 
 const App: React.FC = () => {
   return (

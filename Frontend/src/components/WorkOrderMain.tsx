@@ -3,7 +3,7 @@ import "../CSS/WorkOrderMain.css";
 import './AdjustWidth.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSearch, faEye } from '@fortawesome/free-solid-svg-icons';
-import useAutoResizeInput from './useAutoResizeInput'; // Importa el hook personalizado
+import useAutoResizeInput from './UseAutoResizeInput'; // Importa el hook personalizado
 
 interface WorkOrderMainProps {
   status: string;

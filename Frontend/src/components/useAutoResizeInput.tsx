@@ -1,6 +1,6 @@
 import { useState, useRef, useEffect } from 'react';
 
-const useAutoResizeInput = (value: string) => {
+const UseAutoResizeInput = (value: string) => {
   const [inputWidth, setInputWidth] = useState(0);
   const spanRef = useRef<HTMLSpanElement>(null);
 
@@ -13,4 +13,4 @@ const useAutoResizeInput = (value: string) => {
   return { inputWidth, spanRef };
 };
 
-export default useAutoResizeInput;
+export default UseAutoResizeInput;

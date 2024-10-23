@@ -39,5 +39,20 @@
 }
 
 #aside-information {
-    padding: 0;
+  padding-top: 10px;
+  padding-left: 20px;
+  padding-right: 2.8vw;
+}
+
+#order-buttons {
+  margin-left: 20px;
+}
+
+
+.hidden-span {
+  visibility: hidden;
+  position: absolute;
+  white-space: nowrap;
+  height: 0;
+  overflow: hidden;
 }

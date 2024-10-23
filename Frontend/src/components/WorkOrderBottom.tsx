@@ -28,6 +28,7 @@ const WorkOrderBottom = ({ description, solution }) => {
                         name="descripcion"
                         placeholder="Escribe tu texto aquí..."
                         defaultValue={description} // Asigna el valor de descripción
+                        readOnly
                     ></textarea>
                 )}
                 {activeTextArea === 'solution' && (
