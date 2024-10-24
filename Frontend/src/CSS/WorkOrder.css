@@ -48,6 +48,11 @@
   margin-left: 20px;
 }
 
+.order-buttons-item.read-only {
+  color: gray; /* Color cuando está en modo lectura */
+  pointer-events: none; /* Desactiva los eventos de clic */
+  cursor: not-allowed; /* Cambia el cursor a "no permitido" */
+}
 
 .hidden-span {
   visibility: hidden;

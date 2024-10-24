@@ -11,6 +11,15 @@ import { faSave, faEnvelope, faSignOutAlt } from "@fortawesome/free-solid-svg-ic
 import useAutoResizeInput from './useAutoResizeInput';
 import { useNavigate } from "react-router-dom";
 
+interface DataToSend {
+  solution: string;
+  status: string;
+  responsibleCode: string;
+  service: string;
+  caseCode: string | undefined;
+  date?: string; 
+}
+
 const WorkOrder = () => {
   const { caseCode } = useParams<{ caseCode: string }>();
   const [orderData, setOrderData] = useState({
@@ -27,6 +36,7 @@ const WorkOrder = () => {
     serviceCode: '',
     plate: '',
     brand: '',
+    endDate: '',
     responsibleName: '',
     responsibleCode: '',
     users: [],
@@ -53,6 +63,7 @@ const WorkOrder = () => {
             serviceCode, 
             plate, 
             brand, 
+            endDate,
             responsibleName, 
             clientCode, 
             responsibleCode,
@@ -74,6 +85,7 @@ const WorkOrder = () => {
             serviceCode: serviceCode || '',
             plate: plate || '',
             brand: brand || '',
+            endDate: endDate,
             responsibleName: responsibleName || '',
             responsibleCode: responsibleCode || '',
             users: users || [],
@@ -101,13 +113,21 @@ const WorkOrder = () => {
       setSelectedStatus(''); 
     }
   }, [orderData.status]);
+ 
+  const [isReadOnly, setIsReadOnly] = React.useState(false)
 
   const handleStatusChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
     setSelectedStatus(event.target.value);
     console.log(`Estado seleccionado: ${event.target.value}`);
   };
 
-  
+  useEffect(() => {
+    if (selectedStatus === "Cerrado" && orderData.status === "Cerrado") {
+      setIsReadOnly(true);
+    } else {
+      setIsReadOnly(false); // Desbloquear si cambia a algo distinto de "Cerrado"
+    }
+  }, [selectedStatus]);
 
   // Función que maneja la salida
 
@@ -130,8 +150,8 @@ const WorkOrder = () => {
   // Componente AutoResizeInput para ajustar el tamaño del input
   const AutoResizeInput = React.forwardRef<
   HTMLInputElement, // Tipo de ref
-  { value: string; placeholder?: string; className?: string; readOnly?: boolean } // Props del componente
-  >(({ value, placeholder, className, readOnly }, ref) => {
+  { value: string; placeholder?: string; className?: string; readOnly?: boolean; disabled?: boolean } // Props del componente, añado disabled
+>(({ value, placeholder, className, readOnly, disabled }, ref) => {
     const { inputWidth, spanRef } = useAutoResizeInput(value);
 
     return (
@@ -144,11 +164,12 @@ const WorkOrder = () => {
           style={{ width: `${inputWidth + 20}px` }}
           className={className}
           readOnly={readOnly}
-          ref={ref} // Ahora ref se maneja correctamente aquí
+          disabled={disabled}  // Aquí aplico disabled al input
+          ref={ref} // ref ahora se maneja correctamente aquí
         />
       </div>
     );
-  });
+});
 
   // Componente WorkOrderBottom integrado
   const WorkOrderBottom = ({ description, solution }) => {
@@ -195,6 +216,8 @@ const WorkOrder = () => {
     );
   };
 
+  const [activeTextArea, setActiveTextArea] = useState('description');
+  
    // Función para manejar el clic en el botón "Guardar"
    const solutionRef = React.useRef<HTMLTextAreaElement | null>(null);
   const statusRef = React.useRef<HTMLSelectElement | null>(null);
@@ -203,23 +226,32 @@ const WorkOrder = () => {
 
   const handleSaveClick = async (e: React.MouseEvent<HTMLAnchorElement>) => {
     e.preventDefault();
+
     const confirmSave = window.confirm("¿Estás seguro de que quieres guardar los cambios?");
 
     if (confirmSave) {
-      // Obtener los valores de los campos utilizando refs
-      const solution = solutionRef.current?.value || ''; 
-      const status = statusRef.current?.value || ''; 
-      const responsibleCode = responsibleCodeRef.current?.value || ''; 
-      const service = serviceCodeRef.current?.value || '';
-      console.log(responsibleCode);
-      // Crear un objeto con los datos a enviar al backend
-      const dataToSend = {
-        solution,
-        status,
-        responsibleCode,
-        service,
-        caseCode,
+        // Obtener los valores de los campos utilizando refs
+        const solution = solutionRef.current?.value || ''; 
+        const status = statusRef.current?.value || ''; 
+        const responsibleCode = responsibleCodeRef.current?.value || ''; 
+        const service = serviceCodeRef.current?.value || '';
+
+        // Crear un objeto con los datos a enviar al backend
+        const dataToSend: DataToSend = {
+          solution,
+          status,
+          responsibleCode,
+          service,
+          caseCode,
       };
+
+      // Si el estado es "Cerrado", agregar la fecha actual
+      if (status === "Cerrado") {
+          const currentDate = new Date(); // Obtener la fecha actual
+          dataToSend.date = currentDate.toISOString(); // Formatear como ISO string
+      }
+
+      console.log(dataToSend);
 
       try {
         // Enviar los datos al backend con fetch
@@ -235,6 +267,8 @@ const WorkOrder = () => {
         if (response.ok) {
           const result = await response.json(); // Si el backend retorna algo
           console.log('Guardado correctamente:', result);
+          // Recargar la página
+          window.location.reload();
         } else {
           console.error('Error al guardar, estado del HTTP:', response.status);
         }
@@ -258,7 +292,12 @@ const WorkOrder = () => {
               <p className='main-details-p basic-details-p'>Información básica</p>
 
               <p className='main-details-p'>Estado</p>
-              <select id="status" className='status-select' value={selectedStatus} onChange={handleStatusChange} ref={statusRef}>
+              <select id="status" 
+              className='status-select' 
+              value={selectedStatus} 
+              onChange={handleStatusChange} 
+              ref={statusRef}
+              disabled={isReadOnly}>
                 <option value="">Seleccione un estado</option>
                 <option value="Registrado">Registrado</option>
                 <option value="Proceso">En Proceso</option>
@@ -271,7 +310,8 @@ const WorkOrder = () => {
                   value={orderData.clientName} 
                   placeholder="Ingrese el nombre del cliente" 
                   className="input-field" 
-                  readOnly 
+                  readOnly
+                  disabled={isReadOnly} 
                 />
                 <div className="icon-container">
                   <FontAwesomeIcon icon={faEye} className="icon icon-buscar" />
@@ -297,7 +337,7 @@ const WorkOrder = () => {
                     console.log('Usuario seleccionado:', selectedUser);
                   }
                 }}
-
+                disabled={isReadOnly}
                 ref={responsibleCodeRef}
               >
                 <option value="">Seleccione un responsable</option>
@@ -305,7 +345,7 @@ const WorkOrder = () => {
                   <option key={user.usu_codigo} value={user.usu_codigo}>
                     {user.usu_nombre}
                   </option>
-                ))}
+                ))} 
               </select>
 
               <p className='main-details-p'>Servicio</p>
@@ -328,6 +368,7 @@ const WorkOrder = () => {
                     console.log('Servicio no encontrado');
                   }
                 }}
+                disabled={isReadOnly}
                 ref={serviceCodeRef}
               >
                 <option value="">Seleccione un servicio</option>
@@ -347,6 +388,7 @@ const WorkOrder = () => {
                 placeholder="Ingrese la placa" 
                 className="status-select input-service" 
                 readOnly 
+                disabled={isReadOnly}
               />
 
               <p className='main-details-p'>Marca</p>
@@ -355,18 +397,68 @@ const WorkOrder = () => {
                 placeholder="Ingrese la marca" 
                 className="status-select input-service" 
                 readOnly 
+                disabled={isReadOnly}
               />
             </div>
           </div>
+          <div className='information-div solution-div'>
+            <div className='information-div nav-div'>
+                <p
+                    className={`nav-information p-information description-p ${activeTextArea === 'description' ? 'active' : ''}`}
+                    onClick={() => setActiveTextArea('description')}
+                >
+                    Descripción
+                </p>
+                <p
+                    className={`nav-information p-information solution-p ${activeTextArea === 'solution' ? 'active' : ''}`}
+                    onClick={() => setActiveTextArea('solution')}
+                >
+                    Solución
+                </p>
+            </div>
+            <div className='description-solution'>
+                {activeTextArea === 'description' && (
+                    <textarea
+                        className="description-solution-textarea"
+                        id="description-textarea"
+                        name="descripcion"
+                        placeholder="Escribe tu texto aquí..."
+                        defaultValue={orderData.description} // Asigna el valor de descripción
+                        readOnly
+                        disabled={isReadOnly}
+                    ></textarea>
+                )}
+                {activeTextArea === 'solution' && (
+                    <textarea
+                        className="description-solution-textarea"
+                        id="solution-textarea"
+                        name="solucion"
+                        placeholder="Escribe la solución aquí..."
+                        defaultValue={orderData.solution} // Asigna el valor de solución
+                        disabled={isReadOnly}
 
-          <WorkOrderBottom description={orderData.description} solution={orderData.solution} />
+                        ref={solutionRef}
+                    ></textarea>
+                )}
+            </div>
+        </div>
         </div>
         <div className='col-lg-4' id='aside-information'>
           <div className='row main-information-item' id='order-buttons'>
-            <a href="#save" onClick={handleSaveClick} className="order-buttons-item col-lg-4 col-md-4 col-sm-12">
-              <FontAwesomeIcon icon={faSave} />
-              <span className="order-menu-text">Guardar</span>
-            </a>
+          <a
+            href="#save"
+            onClick={(e) => {
+              if (isReadOnly) {
+                e.preventDefault(); 
+                return; 
+              }
+              handleSaveClick(e); 
+            }}
+            className={`order-buttons-item col-lg-4 col-md-4 col-sm-12 ${isReadOnly ? 'read-only' : ''}`}  
+          >
+  <FontAwesomeIcon icon={faSave} />
+  <span className="order-menu-text">Guardar</span>
+</a>
             <a href={`mailto:${orderData.clientEmail}?subject=Caso No. ${caseCode}&body=`} className="order-buttons-item col-lg-4 col-md-4 col-sm-12">
               <FontAwesomeIcon icon={faEnvelope} />
               <span className="order-menu-text">Enviar Correo</span>
@@ -379,6 +471,7 @@ const WorkOrder = () => {
           <WorkOrderAside
             creatorName={orderData.creatorName}
             creationDate={orderData.creationDate}
+            endDate={orderData.endDate}
             expectedCost={orderData.expectedCost}
             currentCost={orderData.currentCost}
           />

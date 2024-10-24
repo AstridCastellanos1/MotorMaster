@@ -51,7 +51,8 @@
   }
 
 #order-creator {
-    height: 180px;
+  height: auto;
+  padding-bottom: 20px;
 }
 
 #order-cost {

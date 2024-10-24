@@ -6,6 +6,40 @@ const { MarcaVehiculo } = require("../models/dbMarcaVehiculo");
 const { Servicio } = require("../models/dbServicio");
 
 
+// Buscar todas las órdenes de trabajo
+exports.getAllWorkOrders = async (req, res) => {
+  try {
+    // Buscar todas las órdenes de trabajo
+    const workOrders = await WorkOrder.find({})
+      .populate('cli_id')
+      .populate({
+        path: 'veh_id',
+        populate: { path: 'mve_id' }
+      })
+      .populate('usu_creador usu_id_responsable ser_id');
+
+    if (!workOrders.length) {
+      return res.status(404).json({ success: false, message: "No hay órdenes de trabajo disponibles" });
+    }
+
+    // Preparar las órdenes para enviar al frontend
+    const allWorkOrders = workOrders.map(order => ({
+      caseNumber: order.otr_codigo,
+      creationDate: order.otr_fecha_creacion.toISOString().split('T')[0],
+      status: order.otr_estado,
+      clientName: order.cli_id ? order.cli_id.cli_nombre : 'Cliente no encontrado',
+      responsibleName: order.usu_id_responsable ? order.usu_id_responsable.usu_nombre : 'Responsable no encontrado'
+    }));
+
+    // Enviar todas las órdenes al frontend
+    res.json({ success: true, data: allWorkOrders });
+  } catch (error) {
+    console.error("Error al obtener las órdenes de trabajo:", error);
+    res.status(500).json({ success: false, message: "Error al obtener las órdenes de trabajo" });
+  }
+};
+
+
 // Buscar una orden de trabajo existente
 exports.getWorkOrderDetails = async (req, res) => {
   const { codigo } = req.params;
@@ -36,6 +70,7 @@ exports.getWorkOrderDetails = async (req, res) => {
     const responsibleName = workOrder.usu_id_responsable ? workOrder.usu_id_responsable.usu_nombre : 'Responsable no encontrado';
     const responsibleCode = workOrder.usu_id_responsable ? workOrder.usu_id_responsable.usu_codigo : 'Código no disponible'; // Agregado
 
+    const endDate = workOrder.otr_fecha_cierre ? workOrder.otr_fecha_cierre.toISOString().split('T')[0] : '';
     // Obtener todos los usuarios con su código y nombre
     const users = await Usuario.find({}, { usu_codigo: 1, usu_nombre: 1 });
 
@@ -49,7 +84,7 @@ exports.getWorkOrderDetails = async (req, res) => {
       expectedCost: workOrder.otr_presupuesto,
       currentCost: workOrder.otr_costo_actual,
       description: workOrder.otr_descripcion || 'No hay descripción disponible.',
-      solution: workOrder.otr_solucion || '',
+      solution: workOrder.otr_solution || '',
       status: workOrder.otr_estado || 'Estado no disponible',  
       clientName,
       clientCode, 
@@ -57,6 +92,7 @@ exports.getWorkOrderDetails = async (req, res) => {
       serviceCode: workOrder.ser_id ? workOrder.ser_id.ser_codigo : 'Servicio no implementado aún',
       plate: vehiclePlate,
       brand: vehicleBrand,
+      endDate,
       responsibleName,
       responsibleCode,
       users,
@@ -76,7 +112,7 @@ exports.getWorkOrderDetails = async (req, res) => {
 // Modificar una orden de trabajo existente
 exports.updateWorkOrder = async (req, res) => {
   try {
-    const { caseCode, solution, status, responsibleCode, service } = req.body;
+    const { caseCode, solution, status, responsibleCode, service, date } = req.body;
     
     // Buscar al responsable por su código
     const usuarioResponsable = await Usuario.findOne({ usu_codigo: responsibleCode });
@@ -94,20 +130,16 @@ exports.updateWorkOrder = async (req, res) => {
 
     const ordenEncontrada = await WorkOrder.findOne({ otr_codigo: caseCode })
     
-    console.log({
-      responsableId,
-      servicioId,
-      solution,
-      status
-    });
+    console.log({date});
     // Actualizar la orden de trabajo por su código
     const ordenActualizada = await WorkOrder.findOneAndUpdate(
       { otr_codigo: caseCode }, // Asegúrate de que esto esté correcto
       {
         usu_id_responsable: responsableId,
         ser_id: servicioId,
-        otr_solucion: solution,
+        otr_solution: solution,
         otr_estado: status,
+        otr_fecha_cierre: date,
       },
       { new: true } // Retornar el documento actualizado
     );

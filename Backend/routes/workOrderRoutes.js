@@ -2,6 +2,9 @@ const express = require("express");
 const router = express.Router();
 const workOrderController = require("../controllers/workOrderController");
 
+// Ruta para obtener todas las ordenes de trabajo
+router.get("/workOrder/all", workOrderController.getAllWorkOrders);
+
 // Ruta para obtener los detalles de la orden de trabajo
 router.get("/workOrder/:codigo", workOrderController.getWorkOrderDetails);
 

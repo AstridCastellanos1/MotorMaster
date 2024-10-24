@@ -23,3 +23,29 @@ body {
 .input-administration {
   flex: 1;
 }
+
+#table-case {
+  width: auto;
+  margin-left: 10px;
+  margin-right: 10px;
+}
+
+th a {
+  color: black;
+  font-weight: 400;
+}
+
+.tr-status {
+  border-radius: 10px;
+}
+
+tr td.status-cerrado {
+  background-color: black;
+  color: white;
+}
+
+tr td.status-en-proceso {
+  background-color: rgb(230, 241, 214);
+  color: black;
+}
+

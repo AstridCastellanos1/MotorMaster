@@ -1,15 +1,16 @@
-import React, { useState } from 'react';
+import React from 'react';
 import "../CSS/WorkOrderAside.css";
 
 interface WorkOrderAsideProps {
   creatorName: string;
   creationDate: string;
+  endDate: string;
   expectedCost: number;
   currentCost: number;
 }
 
 const WorkOrderAside: React.FC<WorkOrderAsideProps> = ({
-  creatorName, creationDate, expectedCost, currentCost
+  creatorName, creationDate, endDate, expectedCost, currentCost
 }) => {
   
   return (
@@ -23,6 +24,14 @@ const WorkOrderAside: React.FC<WorkOrderAsideProps> = ({
           <p className='creation-details-p information-p' id='creator-p'>{creatorName}</p>
           <p className='creation-details-p'>Fecha de Creación</p>
           <p className='creation-details-p information-p' id='creation-date-p'>{creationDate}</p>
+          
+          {/* Solo mostrar "Fecha de Finalización" si endDate tiene un valor */}
+          {endDate && (
+            <>
+              <p className='creation-details-p'>Fecha de Finalización</p>
+              <p className='creation-details-p information-p' id='end-date-p'>{endDate}</p>
+            </>
+          )}
         </div>
 
         {/* Información de costos */}

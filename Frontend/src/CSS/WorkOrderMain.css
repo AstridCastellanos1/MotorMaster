@@ -80,6 +80,13 @@
   box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
   border: none;
 }
+
+input[readonly] {
+  background-color: white; 
+  color: gray; 
+  opacity: 1; 
+  cursor: default; 
+}
   
 #input-fild-costum {
   width: auto;
@@ -113,22 +120,21 @@
 }
 
 .icon-buscar.disabled {
-  pointer-events: none; /* No permite clics en el ícono */
-  opacity: 0.5;         /* Hacer que se vea deshabilitado */
+  pointer-events: none; 
+  opacity: 0.5;        
 }
 
 .responsible-input-select {
-  width: auto; /* Asegura que ocupe el 100% del contenedor */
+  width: auto; 
   margin-left: 10px;
   height: 25px;
   padding-left: 5px;
-  border: 1px solid #ccc; /* Borde similar a los inputs */
-  border-radius: 4px; /* Bordes redondeados */
-  font-size: 13px; /* Tamaño de fuente */
-  font-weight: 500; /* Negrita para la fuente */
+  border: 1px solid #ccc; 
+  border-radius: 4px; 
+  font-size: 13px; 
+  font-weight: 500;
 }
 
-/* Estilo al enfocar el select */
 .responsible-input-select {
   outline: none;            
   box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
