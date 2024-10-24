@@ -24,11 +24,13 @@ const WorkOrder = () => {
     clientName: '',
     clientCode: '',
     clientEmail: '',
-    service: '',
+    serviceCode: '',
     plate: '',
     brand: '',
     responsibleName: '',
-    responsibleCode: ''
+    responsibleCode: '',
+    users: [],
+    services: []
   });
 
   useEffect(() => {
@@ -48,12 +50,14 @@ const WorkOrder = () => {
             status, 
             clientName, 
             clientEmail, 
-            service, 
+            serviceCode, 
             plate, 
             brand, 
             responsibleName, 
             clientCode, 
-            responsibleCode 
+            responsibleCode,
+            users,
+            services
           } = result.data;
           
           setOrderData({
@@ -67,11 +71,13 @@ const WorkOrder = () => {
             clientName: clientName || '',
             clientCode: clientCode || '',
             clientEmail: clientEmail || '',
-            service: service || '',
+            serviceCode: serviceCode || '',
             plate: plate || '',
             brand: brand || '',
             responsibleName: responsibleName || '',
-            responsibleCode: responsibleCode || ''
+            responsibleCode: responsibleCode || '',
+            users: users || [],
+            services: services || []
           });
         } else {
           console.error("Error al obtener la orden de trabajo:", result.message);
@@ -101,6 +107,7 @@ const WorkOrder = () => {
     console.log(`Estado seleccionado: ${event.target.value}`);
   };
 
+  
 
   // Función que maneja la salida
 
@@ -146,7 +153,6 @@ const WorkOrder = () => {
   // Componente WorkOrderBottom integrado
   const WorkOrderBottom = ({ description, solution }) => {
     const [activeTextArea, setActiveTextArea] = useState('description');
-
     return (
       <div className='information-div solution-div'>
         <div className='information-div nav-div'>
@@ -192,8 +198,8 @@ const WorkOrder = () => {
    // Función para manejar el clic en el botón "Guardar"
    const solutionRef = React.useRef<HTMLTextAreaElement | null>(null);
   const statusRef = React.useRef<HTMLSelectElement | null>(null);
-  const responsibleNameRef = React.useRef<HTMLInputElement | null>(null);
-  const serviceRef = React.useRef<HTMLInputElement | null>(null);
+  const responsibleCodeRef = React.useRef<HTMLSelectElement | null>(null);
+  const serviceCodeRef = React.useRef<HTMLSelectElement | null>(null);
 
   const handleSaveClick = async (e: React.MouseEvent<HTMLAnchorElement>) => {
     e.preventDefault();
@@ -203,11 +209,9 @@ const WorkOrder = () => {
       // Obtener los valores de los campos utilizando refs
       const solution = solutionRef.current?.value || ''; 
       const status = statusRef.current?.value || ''; 
-      const responsibleName = responsibleNameRef.current?.value || ''; 
-      //const service = serviceRef.current?.value || ''; 
-      const responsibleCode = '501';
-      const service = '901';
-
+      const responsibleCode = responsibleCodeRef.current?.value || ''; 
+      const service = serviceCodeRef.current?.value || '';
+      console.log(responsibleCode);
       // Crear un objeto con los datos a enviar al backend
       const dataToSend = {
         solution,
@@ -276,29 +280,64 @@ const WorkOrder = () => {
               </div>
 
               <p className='main-details-p'>Responsable</p>
-              <div className="input-with-icons">
-                <AutoResizeInput 
-                  value={orderData.responsibleName} 
-                  placeholder="Ingrese el nombre del responsable" 
-                  className="input-field" 
-                  readOnly 
-                  ref={responsibleNameRef}
-                />
-                <div className="icon-container">
-                  <FontAwesomeIcon icon={faSearch} className="icon icon-buscar" />
-                </div>
-              </div>
+              <select
+                className='responsible-input-select'
+                value={orderData.responsibleCode || ''}  // Mostrar el código del responsable seleccionado
+                onChange={(e) => {
+                  const selectedUserCode = parseInt(e.target.value, 10);
+                  
+                  const selectedUser = orderData.users.find(user => user.usu_codigo === selectedUserCode);
+
+                  if (selectedUser) {
+                    setOrderData((prev) => ({
+                      ...prev,
+                      responsibleCode: selectedUser.usu_codigo,
+                      responsibleName: selectedUser.usu_nombre
+                    }));
+                    console.log('Usuario seleccionado:', selectedUser);
+                  }
+                }}
+
+                ref={responsibleCodeRef}
+              >
+                <option value="">Seleccione un responsable</option>
+                {orderData.users.map((user) => (
+                  <option key={user.usu_codigo} value={user.usu_codigo}>
+                    {user.usu_nombre}
+                  </option>
+                ))}
+              </select>
 
               <p className='main-details-p'>Servicio</p>
-              <AutoResizeInput 
-                value={orderData.service} 
-                placeholder="Ingrese el servicio" 
-                className="status-select input-service" 
-                readOnly 
-                ref={serviceRef}
-              />
+              <select
+                className='responsible-input-select'
+                value={orderData.serviceCode || ''}  // Mostrar el código del responsable seleccionado
+                onChange={(e) => {
+                  const selectedServiceCode = parseInt(e.target.value, 10);
+                  console.log('Service seleccionado:', selectedServiceCode);
+                  const selectedService = orderData.services.find(service => service.ser_codigo === selectedServiceCode);
+                  console.log('responsable', responsibleCodeRef)
+                  if (selectedService) {
+                    setOrderData((prev) => ({
+                      ...prev,
+                      serviceCode: selectedService.ser_codigo,
+                      serviceName: selectedService.ser_nombre
+                    }));
+                    console.log('Servicio seleccionado:', selectedService);
+                  } else {
+                    console.log('Servicio no encontrado');
+                  }
+                }}
+                ref={serviceCodeRef}
+              >
+                <option value="">Seleccione un servicio</option>
+                {orderData.services.map((service) => (
+                  <option key={service.ser_codigo} value={service.ser_codigo}>
+                    {service.ser_nombre}
+                  </option>
+                ))}
+              </select>
             </div>
-
             <div className='basic-information-div vehicle-information'>
               <p className='main-details-p basic-details-p'>Información del vehículo</p>
 

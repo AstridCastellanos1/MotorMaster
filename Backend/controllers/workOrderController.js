@@ -36,6 +36,12 @@ exports.getWorkOrderDetails = async (req, res) => {
     const responsibleName = workOrder.usu_id_responsable ? workOrder.usu_id_responsable.usu_nombre : 'Responsable no encontrado';
     const responsibleCode = workOrder.usu_id_responsable ? workOrder.usu_id_responsable.usu_codigo : 'Código no disponible'; // Agregado
 
+    // Obtener todos los usuarios con su código y nombre
+    const users = await Usuario.find({}, { usu_codigo: 1, usu_nombre: 1 });
+
+    const services = await Servicio.find({}, { ser_codigo: 1, ser_nombre: 1 });
+    //console.log("Usuarios obtenidos:", users); // Para verificar en la consola
+
     // Preparar los datos para enviar al frontend
     const workOrderDetails = {
       creatorName,
@@ -48,11 +54,13 @@ exports.getWorkOrderDetails = async (req, res) => {
       clientName,
       clientCode, 
       clientEmail,
-      service: workOrder.ser_id ? workOrder.ser_id.ser_nombre : 'Servicio no implementado aún',
+      serviceCode: workOrder.ser_id ? workOrder.ser_id.ser_codigo : 'Servicio no implementado aún',
       plate: vehiclePlate,
       brand: vehicleBrand,
       responsibleName,
-      responsibleCode 
+      responsibleCode,
+      users,
+      services
     };
 
     // Enviar respuesta al frontend con los datos de la orden de trabajo
@@ -69,7 +77,7 @@ exports.getWorkOrderDetails = async (req, res) => {
 exports.updateWorkOrder = async (req, res) => {
   try {
     const { caseCode, solution, status, responsibleCode, service } = req.body;
-
+    
     // Buscar al responsable por su código
     const usuarioResponsable = await Usuario.findOne({ usu_codigo: responsibleCode });
     if (!usuarioResponsable) {
@@ -78,14 +86,20 @@ exports.updateWorkOrder = async (req, res) => {
     const responsableId = usuarioResponsable._id; // Esto toma solo el ObjectId
 
     // Buscar el servicio por su código
-    const servicio = await Servicio.findOne({ ser_codigo: service });
-    if (!servicio) {
+    const servicioC = await Servicio.findOne({ ser_codigo: service });
+    if (!servicioC) {
       return res.status(404).json({ success: false, message: 'Servicio no encontrado' });
     }
-    const servicioId = servicio._id; 
+    const servicioId = servicioC._id; 
 
     const ordenEncontrada = await WorkOrder.findOne({ otr_codigo: caseCode })
     
+    console.log({
+      responsableId,
+      servicioId,
+      solution,
+      status
+    });
     // Actualizar la orden de trabajo por su código
     const ordenActualizada = await WorkOrder.findOneAndUpdate(
       { otr_codigo: caseCode }, // Asegúrate de que esto esté correcto
@@ -113,25 +127,6 @@ exports.updateWorkOrder = async (req, res) => {
   }
 };
 
-/*Obtener todos los usuarios para colocar en Responsable
-exports.getUsersNames = async (req, res) => {
-  try {
-    const users = await Usuario.find({}, { usu_codigo: 1, usu_nombre: 1 }); // Devuelve solo el código y el nombre
-    console.log(users);
-    res.status(200).json(users);
-  } catch (error) {
-    console.error("Error al obtener usuarios:", error);
-    res.status(500).json({ success: false, message: "Error al obtener usuarios" });
-  }
-};
-*/
-exports.getUsersNames = async () => {
-  try {
-    const users = await Usuario.find({}, { usu_codigo: 1, usu_nombre: 1 }); // Devuelve solo el código y el nombre
-    return users; // Devuelve los usuarios
-  } catch (error) {
-    console.error("Error al obtener usuarios:", error);
-    throw new Error("Error al obtener usuarios"); // Lanza el error para manejarlo más tarde
-  }
-};
+
+
 
