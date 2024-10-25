@@ -8,6 +8,7 @@ body {
   overflow: hidden;
 }
 
+
 .menu-Admin-container {
   display: flex;
   flex-direction: column;
@@ -18,10 +19,90 @@ body {
   display: flex;
   justify-content: flex-end;
   width: 100vw;
+  margin: 15px 0;
 }
 
-.input-administration {
+
+#navbar-search {
+  width: 25vw;
+  display: flex;
+}
+
+.input-container {
+  position: relative;
+  display: flex;
+  align-items: center; 
+  width: 200px;
+  margin-right: 20px;
+}
+
+.button-icon {
+  height: 25px;
+  padding: 0 5px; 
+  line-height: 1.5;
+  color: black;
+  background-color: #fff;
+  border: 1px solid #ced4da;
+  border-right: none; 
+  border-radius: 0.25rem 0 0 0.25rem; 
+  transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+  outline: none; 
+  
+}
+
+.button-icon:hover {
+  border-color: #ced4da; 
+  box-shadow: none; 
+}
+
+.button-icon:focus {
+  outline: none;
+  border-color: #ced4da; 
+}
+
+.icon-buscar {
+  margin-right: 0; 
+  color: black; 
+  transition: transform 0.2s ease;
+}
+
+.icon-buscar:active {
+  transform: scale(1.5);
+}
+
+
+#input-serch {
   flex: 1;
+  height: 25px;
+  line-height: 1.5;
+  background-color: #fff;
+  border: 1px solid #ced4da;
+  border-left: none;
+  border-radius: 0 0.25rem 0.25rem 0;
+  transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+}
+
+#input-serch:focus {
+  outline: none; 
+}
+
+.input-container {
+  display: flex;
+  align-items: center;
+}
+
+.input-container:focus-within {
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.2); 
+}
+
+.navbar-buttons-item {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: black;
+  text-decoration: none;
+  font-size: 0.8rem;
+  margin-left: 10px;
 }
 
 #table-case {
@@ -48,4 +129,3 @@ tr td.status-en-proceso {
   background-color: rgb(230, 241, 214);
   color: black;
 }
-

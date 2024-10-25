@@ -455,10 +455,10 @@ const WorkOrder = () => {
               handleSaveClick(e); 
             }}
             className={`order-buttons-item col-lg-4 col-md-4 col-sm-12 ${isReadOnly ? 'read-only' : ''}`}  
-          >
-  <FontAwesomeIcon icon={faSave} />
-  <span className="order-menu-text">Guardar</span>
-</a>
+            >
+              <FontAwesomeIcon icon={faSave} />
+              <span className="order-menu-text">Guardar</span>
+            </a>
             <a href={`mailto:${orderData.clientEmail}?subject=Caso No. ${caseCode}&body=`} className="order-buttons-item col-lg-4 col-md-4 col-sm-12">
               <FontAwesomeIcon icon={faEnvelope} />
               <span className="order-menu-text">Enviar Correo</span>
